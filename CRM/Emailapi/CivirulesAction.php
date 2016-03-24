@@ -38,6 +38,7 @@ class CRM_Emailapi_CivirulesAction extends CRM_CivirulesActions_Generic_Api {
   protected function alterApiParameters($parameters, CRM_Civirules_TriggerData_TriggerData $triggerData) {
     //this method could be overridden in subclasses to alter parameters to meet certain criteria
     $parameters['contact_id'] = $triggerData->getContactId();
+    $parameters['data'] = $triggerData->getAllEntityData();
 
     return $parameters;
   }

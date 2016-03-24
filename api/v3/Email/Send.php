@@ -29,6 +29,7 @@ function civicrm_api3_email_send($params) {
   }
   $contactIds = explode(",", $params['contact_id']);
   $alternativeEmailAddress = !empty($params['alternative_receiver_address']) ? $params['alternative_receiver_address'] : false;
+  $entity_data = $params['data'];
 
   // Compatibility with CiviCRM > 4.3
   if($version >= 4.4) {
@@ -141,6 +142,13 @@ function civicrm_api3_email_send($params) {
     $text = $body_text;
 
     $smarty = CRM_Core_Smarty::singleton();
+
+    if (!empty($entity_data)) {
+      foreach ($entity_data as $key => $value) {
+	$smarty->assign($key, $value);
+      }
+    }
+
     foreach ($type as $elem) {
       $$elem = $smarty->fetch("string:{$$elem}");
     }
